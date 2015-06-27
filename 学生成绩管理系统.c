@@ -52,7 +52,7 @@ int main(void)
 	stu* p;
 	int i=0,t=0,n;		//n用来存储选择的项
 	enter();
-	system("CLS");
+	system("clear");
 	head=_read();
 	if(head->next==NULL)
 	{
@@ -62,7 +62,7 @@ int main(void)
 	}
 	while(1)
 	{
-		system("CLS");
+		system("clear");
 		printf("\n");
 		printf("\t\t           ---学生成绩管理系统---           \n");
 	    printf("\t\t******************************************\n");
@@ -82,15 +82,15 @@ int main(void)
 		switch(n)
 		{
 		case 1:
-			system("CLS");
+			system("clear");
 			insert(head);
 			break;
 		case 2:
-			system("CLS");
+			system("clear");
 			del(head);
 			break;
 		case 3:
-			system("CLS");
+			system("clear");
 			p=find(head);
 			if(!p)
 				break;
@@ -104,23 +104,23 @@ int main(void)
 			change(head);
 			break;
 		case 5:
-			system("CLS");
+			system("clear");
 			tongji(head);
 			break;
 		case 6:
-			system("CLS");
+			system("clear");
 			sort();
 			break;
 		case 7:
-			system("CLS");
+			system("clear");
 			disp();
 			break;
 		case 8:
-			system("CLS");
+			system("clear");
 			save(head);
 			break;
 		case 9:
-			system("CLS");
+			system("clear");
 			head=_read();
 			disp(head);
 		}
@@ -657,6 +657,7 @@ void tongji(stu *head)
 		break;
 	}
 	printf("\n\n\n...按任意键返回!");
+    fflush(stdin);
 	mygetch();
 }
 stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
@@ -1014,128 +1015,6 @@ void sort()			//学生排序
 
 
 
-/*void enter()
-{
-	char u[20];
-	char k[20];
-	char k1[20];
-	int i;
-	us p;
-	int n=0;
-	int s;
-	int fc;
-	FILE *fp;
-	printf("\n\n\t\t    ************学生管理系统***********");
-loop1:	printf("\n\n\t\t\t1.登陆\t2.注册\n\n\t\t\t请选择：");
-	scanf("%d",&s);
-	if(s==1)
-	{
-		printf("\n\t\t\t请输入用户名：");
-		scanf("%s",u);
-		if((fp=fopen("user.txt","rt"))==NULL)		
-			{
-				printf("\n\n\n...用户文件读取出错!任意键退出");
-				mygetch();
-				exit(1);
-			}
-		while(1)
-		{
-		
-			fc=fscanf(fp,"%s %s\n",p.u,p.k);
-			for(i=0;i<(int)strlen(p.k);i++)
-			{
-				p.k[i]=p.k[i]-20;
-			}
-			if(!strcmp(p.u,u))
-			{
-loop:		printf("\n\t\t\t请输入密码：");
-				n++;
-				fflush(stdin);
-				for(i=0;i<10;i++)			//此循环用来显示密文密码
-				 {
-					 k[i]=mygetch();
-					 if(k[i]!='\r')
-						 printf("*");
-					 else
-						 break;
-				 }
-				k[i]='\0';
-				if(strcmp(p.k,k))
-				{
-					printf("\n\t\t密码输入错误！！请重新输入");
-					if(n>2)
-						printf("\n\t\t密码输入错误三次！！！\n\n\n....按任意键退出..");
-					goto loop;
-				}
-				else
-					return;
-	
-			}
-			if(fc==EOF)
-			{
-				printf("\n\t\t\t用户未找到....\n");
-				fclose(fp);
-				goto loop1;
-			}	
-		}
-	}
-	else
-	{	
-		if((fp=fopen("user.txt","at"))==NULL)
-		{
-			printf("\n\t\t文件打开失败！\n\n任意键退出...");
-			mygetch();
-			exit(0);
-		}
-		printf("\n\t\t\t请输入用户名：");
-		fflush(stdin);
-		scanf("%s",u);
-loop3:		printf("\n\t\t\t请输入密码：");
-		fflush(stdin);
-		for(i=0;i<20;i++)			//此循环用来显示密文密码
-		{
-			fflush(stdin);
-			k[i]=mygetch();
-			if(k[i]!='\r')
-				printf("*");
-			else
-				break;
-		}
-		k[i]='\0';
-		printf("\n\t\t\t请再次输入密码：");
-		for(i=0;i<20;i++)			
-		{
-			k1[i]=mygetch();
-			if(k1[i]!='\r')
-				printf("*");
-			else
-				break;
-		}
-		k1[i]='\0';
-		if(strcmp(k,k1))
-		{
-			printf("\n\t\t\t两次输入密码不相同，请重新设定\n");
-			goto loop3;
-		}
-		for(i=0;i<(int)strlen(k);i++)
-		{
-			k[i]=k[i]+20;
-		}
-		if(fprintf(fp,"%s %s\n",u,k)==EOF)
-		{
-			printf("\n\t\t用户文件写入出错！\n\n\n按任意键退出....");
-			mygetch();
-			exit(0);
-		}
-		printf("\n\t\t\t注册完成，请重新登陆...");
-		fclose(fp);
-		mygetch();
-		enter();
-	}
-}
-*/
-
-
 void enter()
 {
 	int n=0;
@@ -1194,8 +1073,9 @@ int login()				//登陆
 				fflush(stdin);
 				for(i=0;i<10;i++)			//此循环用来显示密文密码
 				{
+                    fflush(stdin);
 					k[i]=mygetch();
-					if(k[i]!='\r')
+					if(k[i]!=10)
 						printf("*");
 					else
 						break;
