@@ -3,6 +3,7 @@
 #include"my_getch.h"
 #include<string.h>
 #include<stdlib.h>
+#include"mystrcmp.h"
 
 struct student
 {
@@ -24,6 +25,8 @@ struct user
 	char u[20];
 	char k[20];
 };
+
+int c;      //消除缓存所用
 
 typedef struct user us;
 typedef struct student stu;
@@ -91,12 +94,13 @@ int main(void)
 			break;
 		case 3:
 			system("clear");
-			p=find(head);
-			if(!p)
-				break;
-			printf("\n你要查找的信息为：\n");
-			print_head();
-			print_data(p->next);
+            p=find(head);
+            p=p->next;
+            if(!p)
+            break;
+            printf("\n你要查找的信息为：\n");
+            print_head();
+            print_data(p);
 			printf("\n\n信息查找完成，按任意键返回....");
 			mygetch();
 			break;
@@ -162,6 +166,7 @@ stu* _read()
 
 stu* luru()
 {
+    int c;
 	char m='y';	//用来判断循环条件是否继续录入成绩
 	stu* p1,*p2,*head;		//此head变量将屏蔽全局变量head
 	head=(stu*)malloc(sizeof(stu));
@@ -169,10 +174,10 @@ stu* luru()
 	printf("请录入数据：\n");
 	while(m=='y')
 	{
-		fflush(stdin);		//清空输入缓存区
+		do{c = fgetc(stdin);}while(c!=10&&c!=EOF);		//清空输入缓存区
 		p2=(stu*)malloc(sizeof(stu));
 		printf("请输入学生学号：");
-		fflush(stdin);
+		do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 		gets(p2->id);
 		printf("请输入姓名：");
 		scanf("%s",p2->name);
@@ -192,7 +197,7 @@ stu* luru()
 		p2->average=(float)((p2->sum)/6.0);
 		p1->next=p2;		//此节点第一个内存数据域为空！！
 		p1=p2;
-		fflush(stdin);
+		do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 		printf("是否继续录入？(y/n)");
 		scanf("%c",&m);
 	}
@@ -220,13 +225,14 @@ void save(stu* head)
 
 void insert(stu* head)		//增加学生信息，即插入
 {
+    int c;
 	stu *p1,*p2;
 	p1=head;
 	while(p1->next)
 		p1=p1->next;
 	p2=(stu*)malloc(sizeof(stu));
 	printf("请输入学生学号：");
-	fflush(stdin);
+	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	gets(p2->id);
 	printf("请输入姓名：");
 	scanf("%s",p2->name);
@@ -247,11 +253,13 @@ void insert(stu* head)		//增加学生信息，即插入
 	p1->next=p2;
 	p2->next=NULL;
 	save(head);
+    getchar();
 }
 
 void disp()			//显示学生信息
 {
 	stu* p;
+    int c;
 	p=head->next;
 	if(!p)
 	{
@@ -266,13 +274,14 @@ void disp()			//显示学生信息
 		p=p->next;
 	}
 	printf("\n\n\n...按任意键返回！！");
-	mygetch();
+	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
+	getchar();
 	return ;
 }
 void print_head()		//显示表头
 {
 	printf("\n				学生信息\n");
-	printf("学号\t  |姓名         |语文 |数学 |英语 |物理 |化学 |生物 |总分  |平均分\n");
+	printf("学号\t  |姓名         |语文 |数学 |英语 |物理 |化学 |生物 |总分  |平均分\n\n");
 	//printf("--------------------------------------------------------------------------\n");
 }
 
@@ -283,6 +292,7 @@ void print_data(stu *p)		//输出数据函数
 
 void del(stu* head)			//删除单条数据函数
 {
+    int c;
 	char m;
 	stu* p=NULL;
 	stu* pr=NULL;
@@ -294,7 +304,7 @@ void del(stu* head)			//删除单条数据函数
 	print_head();
 	print_data(p);
 	printf("\n!!!是否确认删除!!!y/n");
-	fflush(stdin);
+	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	scanf("%c",&m);
 	if(m=='y')
 	{
@@ -313,6 +323,7 @@ void del(stu* head)			//删除单条数据函数
 }
 void change(stu *head)
 {
+    int c;
 	char m;
 	stu* p;
 	p=find(head);
@@ -322,7 +333,7 @@ void change(stu *head)
 	print_data(p);
 	printf("确认修改？y/n");
 	scanf("%c",&m);
-	fflush(stdin);
+	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	if(m=='y')
 	{
 		printf("请输入姓名：");
@@ -355,7 +366,7 @@ void change(stu *head)
 void tongji(stu *head)
 {
 	int count=0;
-	int a;			//a中存储要统计的分界点数据
+	int a,c;			//a中存储要统计的分界点数据
 	int s;			//s为要统计的科目选择
 	stu *p;
 	printf("要统计的项目是:\n");
@@ -363,7 +374,7 @@ void tongji(stu *head)
 	printf("请选择数字(1—8):");
 	scanf("%d",&s);
 	printf("请输入要统计的数据范围  如：+80(80分以上)或-80(80分以下)  :");
-	fflush(stdin);
+	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	scanf("%d",&a);
 	switch(s)
 	{
@@ -657,7 +668,7 @@ void tongji(stu *head)
 		break;
 	}
 	printf("\n\n\n...按任意键返回!");
-    fflush(stdin);
+    do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	mygetch();
 }
 stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
@@ -666,8 +677,8 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 	stu* t=NULL;
 	char id[10];
 	char name[20];
-	int select;
-	double re;
+	int select,c;
+	int re;
 	while(1)
 	{
 		printf("\n\n请选择查找学生方式:\n");
@@ -677,7 +688,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 		{
 		case 1:
 			printf("\n请输入学生学号：");
-			fflush(stdin);
+			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 			gets(id);
 			for(p=head;;p=p->next)
 			{
@@ -696,7 +707,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 			break;
 		case 2:
 			printf("\n请输入学生姓名：");
-			fflush(stdin);
+			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 			gets(name);
 			for(p=head;;p=p->next)
 			{
@@ -715,10 +726,10 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 			break;
 		case 3:
 			printf("\n请输入学生学号：");
-			fflush(stdin);
+			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 			gets(id);		
 			printf("\n请输入学生姓名：");
-			fflush(stdin);
+			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 			gets(name);
 			for(p=head;;p=p->next)
 			{
@@ -738,21 +749,21 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 			while(1)
 			{
 				printf("\n请输入学生学号：");
-				fflush(stdin);
+				do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 				gets(id);
 				if(strlen(id)==0)
 					continue;
 				p=head;
-				re=fabs(strcmp(p->next->id,id));
+				re=mystrcmp(p->next->id,id);
 				t=head->next;
 				for(p=head;;p=p->next)
 				{
-					if(re>fabs(strcmp(p->next->id,id)))
+					if(re>mystrcmp(p->next->id,id))
 					{
-						re=fabs(strcmp(p->next->id,id));
+						re=mystrcmp(p->next->id,id);
 						t=p;
 					}
-					else if(!(p->next->next))
+					if(!(p->next->next))
 					{
 						printf("\n\n模糊查找结果为：\n\n");
 						return t;
@@ -764,21 +775,21 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 			while(1)
 			{
 				printf("\n请输入学生姓名：");
-				fflush(stdin);
+				do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 				gets(name);
 				if(strlen(name)==0)
 					continue;
 				p=head;
-				re=fabs(strcmp(p->next->name,name));
+				re=abs(strcmp(p->next->name,name));
 				t=head->next;
 				for(p=head;;p=p->next)
 				{
-					if(re>fabs(strcmp(p->next->name,name)))
+					if(re>abs(strcmp(p->next->name,name)))
 					{
-						re=fabs(strcmp(p->next->name,name));
+						re=abs(strcmp(p->next->name,name));
 						t=p;
 					}
-					else if(!(p->next->next))
+					if(!(p->next->next))
 					{
 						return t;
 					}
@@ -1047,7 +1058,7 @@ int login()				//登陆
 	char u[20];
 	char k[20];
 	us p;
-	int fc,i,n;
+	int fc,i,n = 0;
 	FILE *fp;
 	printf("\n\t\t\t请输入用户名：");
 	scanf("%s",u);
@@ -1068,27 +1079,30 @@ int login()				//登陆
 		{
 			if(!strcmp(p.u,u))
 			{
+                do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 				printf("\n\t\t\t请输入密码：");
 				n++;
-				fflush(stdin);
+				/*do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 				for(i=0;i<10;i++)			//此循环用来显示密文密码
 				{
-                    fflush(stdin);
+                    printf("...");
+                    do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 					k[i]=mygetch();
-					if(k[i]!=10)
+					if((k[i]!=10)&&(k[i]!=13))
 						printf("*");
 					else
 						break;
 				}
-				k[i]='\0';
+				k[i]='\0';*/
+                scanf("%s",k);
 				if(strcmp(p.k,k))
 				{
-					printf("\n\t\t密码输入错误！！请重新输入");
 					if(n>2)
 					{
-						printf("\n\t\t密码输入错误三次！！！\n\n\n....按任意键退出..");
+						printf("\n\t\t密码输入错误三次！！！\n\n\n");
 						exit(0);
 					}
+					printf("\n\t\t密码输入错误！！请重新输入...");
 					continue;
 				}
 				else
@@ -1121,24 +1135,25 @@ void enroll()				//注册
 			exit(0);
 		}
 		printf("\n\t\t\t请输入用户名：");
-		fflush(stdin);
+		do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 		scanf("%s",u);
 		while(1)
 		{
 			printf("\n\t\t\t请输入密码：");
-			fflush(stdin);
-			for(i=0;i<20;i++)			//此循环用来显示密文密码
+			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
+			/*for(i=0;i<20;i++)			//此循环用来显示密文密码
 			{
-				fflush(stdin);
+				do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 				k[i]=mygetch();
 				if(k[i]!='\r')
 					printf("*");
 				else
 					break;
 			}
-			k[i]='\0';
+			k[i]='\0';*/
+            scanf("%s",k);
 			printf("\n\t\t\t请再次输入密码：");
-			for(i=0;i<20;i++)			
+			/*for(i=0;i<20;i++)			
 			{
 				k1[i]=mygetch();
 				if(k1[i]!='\r')
@@ -1146,7 +1161,8 @@ void enroll()				//注册
 				else
 					break;
 			}
-			k1[i]='\0';
+			k1[i]='\0';*/
+            scanf("%s",k1);
 			if(strcmp(k,k1))
 			{
 				printf("\n\t\t\t两次输入密码不相同，请重新设定\n");
