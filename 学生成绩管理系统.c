@@ -54,6 +54,7 @@ int main(void)
 {
 	stu* p;
 	int i=0,t=0,n;		//n用来存储选择的项
+    system("clear");
 	enter();
 	system("clear");
 	head=_read();
@@ -95,9 +96,9 @@ int main(void)
 		case 3:
 			system("clear");
             p=find(head);
-            p=p->next;
             if(!p)
             break;
+            p=p->next;
             printf("\n你要查找的信息为：\n");
             print_head();
             print_data(p);
@@ -678,7 +679,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 	char id[10];
 	char name[20];
 	int select,c;
-	int re;
+	int re,i,j,k,re1;
 	while(1)
 	{
 		printf("\n\n请选择查找学生方式:\n");
@@ -754,20 +755,29 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 				if(strlen(id)==0)
 					continue;
 				p=head;
-				re=mystrcmp(p->next->id,id);
 				t=head->next;
+                re1=0;
 				for(p=head;;p=p->next)
 				{
-					if(re>mystrcmp(p->next->id,id))
-					{
-						re=mystrcmp(p->next->id,id);
-						t=p;
-					}
-					if(!(p->next->next))
-					{
-						printf("\n\n模糊查找结果为：\n\n");
-						return t;
-					}
+                    re=0;
+                    i=strlen(p->next->id);
+                    j=strlen(id);
+                    for(k=0;k<i;k++)
+                    {
+                        if((p->next->id[k])==id[re])
+                        {
+                            re++;
+                        }
+                    }
+                    if(re1<re)
+                    {
+                        re1=re;
+                        t=p;
+                    }
+                    if(!(p->next->next))
+                    {
+                        return t;
+                    }
 				}
 			}
 			break;
@@ -780,19 +790,30 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 				if(strlen(name)==0)
 					continue;
 				p=head;
-				re=abs(strcmp(p->next->name,name));
 				t=head->next;
+                re1=0;
 				for(p=head;;p=p->next)
 				{
-					if(re>abs(strcmp(p->next->name,name)))
-					{
-						re=abs(strcmp(p->next->name,name));
-						t=p;
-					}
-					if(!(p->next->next))
-					{
-						return t;
-					}
+                    re=0;
+                    i=strlen(p->next->name);
+                    j=strlen(name);
+                    for(k=0;k<i;k++)
+                    {
+                        
+                        if((p->next->name[k])==name[re])
+                        {
+                            re++;
+                        }
+                    }
+                    if(re1<re)
+                    {
+                        re1=re;
+                        t=p;
+                    }
+                    if(!(p->next->next))
+                    {
+                        return t;
+                    }
 				}
 			}
 			break;
