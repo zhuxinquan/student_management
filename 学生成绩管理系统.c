@@ -4,7 +4,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include"mystrcmp.h"
-
+#include"inputkey_getch.h"
 struct student
 {
 	char id[10];
@@ -103,6 +103,7 @@ int main(void)
             print_head();
             print_data(p);
 			printf("\n\n信息查找完成，按任意键返回....");
+            getch1();
 			mygetch();
 			break;
 		case 4:
@@ -179,7 +180,7 @@ stu* luru()
 		p2=(stu*)malloc(sizeof(stu));
 		printf("请输入学生学号：");
 		do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-		gets(p2->id);
+        scanf("%s",p2->id);
 		printf("请输入姓名：");
 		scanf("%s",p2->name);
 		printf("请输入语文成绩：");
@@ -234,7 +235,7 @@ void insert(stu* head)		//增加学生信息，即插入
 	p2=(stu*)malloc(sizeof(stu));
 	printf("请输入学生学号：");
 	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-	gets(p2->id);
+	scanf("%s",p2->id);
 	printf("请输入姓名：");
 	scanf("%s",p2->name);
 	printf("请输入语文成绩：");
@@ -328,15 +329,17 @@ void change(stu *head)
 	char m;
 	stu* p;
 	p=find(head);
-	p=p->next;
+    p=p->next;
 	printf("你要修改的学生信息为：\n");
 	print_head();
 	print_data(p);
 	printf("确认修改？y/n");
-	scanf("%c",&m);
 	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
+    scanf("%c",&m);
 	if(m=='y')
 	{
+        printf("请输入学号：");
+        scanf("%s",p->id);
 		printf("请输入姓名：");
 		scanf("%s",p->name);
 		printf("请输入语文成绩：");
@@ -690,7 +693,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 		case 1:
 			printf("\n请输入学生学号：");
 			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-			gets(id);
+			scanf("%s",id);
 			for(p=head;;p=p->next)
 			{
 				if(!strcmp(p->next->id,id))
@@ -709,7 +712,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 		case 2:
 			printf("\n请输入学生姓名：");
 			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-			gets(name);
+			scanf("%s",name);
 			for(p=head;;p=p->next)
 			{
 				if(!strcmp(p->next->name,name))
@@ -728,10 +731,10 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 		case 3:
 			printf("\n请输入学生学号：");
 			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-			gets(id);		
+			scanf("%s",id);
 			printf("\n请输入学生姓名：");
 			do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-			gets(name);
+			scanf("%s",name);
 			for(p=head;;p=p->next)
 			{
 				if(!(strcmp(p->next->name,name)||strcmp(p->next->id,id)))
@@ -751,7 +754,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 			{
 				printf("\n请输入学生学号：");
 				do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-				gets(id);
+				scanf("%s",id);
 				if(strlen(id)==0)
 					continue;
 				p=head;
@@ -786,7 +789,7 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 			{
 				printf("\n请输入学生姓名：");
 				do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-				gets(name);
+                scanf("%s",name);
 				if(strlen(name)==0)
 					continue;
 				p=head;
@@ -1114,8 +1117,9 @@ int login()				//登陆
 					else
 						break;
 				}
-				k[i]='\0';*/
-                scanf("%s",k);
+                k[i]='\0';*/
+                inputkey(k);
+                // scanf("%s",k);
 				if(strcmp(p.k,k))
 				{
 					if(n>2)
@@ -1172,7 +1176,8 @@ void enroll()				//注册
 					break;
 			}
 			k[i]='\0';*/
-            scanf("%s",k);
+            //scanf("%s",k);
+            inputkey(k);
 			printf("\n\t\t\t请再次输入密码：");
 			/*for(i=0;i<20;i++)			
 			{
@@ -1183,7 +1188,8 @@ void enroll()				//注册
 					break;
 			}
 			k1[i]='\0';*/
-            scanf("%s",k1);
+            //scanf("%s",k1);
+            inputkey(k1);
 			if(strcmp(k,k1))
 			{
 				printf("\n\t\t\t两次输入密码不相同，请重新设定\n");
