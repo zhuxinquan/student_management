@@ -13,7 +13,7 @@
 int getch1(void)
 {
     struct termios tm,tm_old;
-    int fd = STDIN_FILENO, c;
+    int fd = STDIN_FILENO, c,d;
     if(tcgetattr(fd, &tm) < 0)
     {
         return -1;
@@ -38,14 +38,26 @@ int inputkey(char k[])
     int i;
     for(i = 0; i < 10; i++)
     {
-        if( (k[i] = getch1() ) != 13)
+        __fpurge(stdin);
+        k[i] = getch1();
+        if(k[i] == 13)
         {
-            printf("*");
+            k[i]=0;
+            break ;
+        }
+        else if((k[i] == 127) && (i > 0))
+        {
+            printf("\b \b");
+            i-=2;
+        }
+        else if(k[i] == 3)
+        {
+            printf("\n");
+            exit(0);
         }
         else
         {
-            k[i] = 0;
-            break;
+            printf("*");
         }
-    }
+    } 
 }
