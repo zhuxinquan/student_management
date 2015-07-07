@@ -40,6 +40,11 @@ int inputkey(char k[])
     {
         __fpurge(stdin);
         k[i] = getch1();
+        if((k[i] == 127) && (i == 0))
+        {
+            i--;
+            continue ;
+        }
         if(k[i] == 13)
         {
             k[i]=0;

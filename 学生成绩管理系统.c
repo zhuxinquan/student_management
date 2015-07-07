@@ -3,7 +3,6 @@
 #include"my_getch.h"
 #include<string.h>
 #include<stdlib.h>
-#include"mystrcmp.h"
 #include"inputkey_getch.h"
 struct student
 {
@@ -77,8 +76,6 @@ int main(void)
         printf("\t\t              5:统计学生信息                    \n");
         printf("\t\t              6:排序学生信息                    \n");
         printf("\t\t              7:显示学生信息                    \n");
-        printf("\t\t              8:保存学生信息                    \n");
-        printf("\t\t              9:读取学生信息                    \n"); 
         printf("\t\t              0:退出程序                        \n");
 		printf("\t\t******************************************\n");
 		printf("请选择(0～9):");
@@ -688,6 +685,11 @@ stu* find(stu *head)					//返回所找数据的 ！！！前一个指针
 		printf("\n\n请选择查找学生方式:\n");
 		printf("\n  1.学号查找\t\t\t  2.姓名查找\n\n  3.学号+姓名\t\t\t  4.学号模糊查找\n\n  5.姓名模糊查找\t\t  6.取消查找\n\n 请选择：");
 		scanf("%d",&select);
+        if((select != 1) && (select != 2) && (select != 3) && (select != 4) && (select != 5) && (select != 6))
+        {
+            printf("输入不正确，请重新选择......");
+            continue;
+        }
 		switch(select)
 		{
 		case 1:
