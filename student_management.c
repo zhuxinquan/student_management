@@ -99,7 +99,7 @@ int main(void)
             printf("\n你要查找的信息为：\n");
             print_head();
             print_data(p);
-			printf("\n\n信息查找完成，按任意键返回....");
+			printf("\n\n信息查找完成，按ENTER键返回....");
             getch1();
 			mygetch();
 			break;
@@ -211,7 +211,7 @@ void save(stu* head)
 	fp=fopen("s.txt","wt");				//以at形式打开，只能在尾部添加
 	if(fp==NULL)
 	{
-		printf("文件打开失败！\n\n\n...任意键退出!");
+		printf("文件打开失败！\n\n\n...ENTER键退出!");
 		mygetch();
 		exit(1);
 	}
@@ -272,7 +272,7 @@ void disp()			//显示学生信息
 		print_data(p);
 		p=p->next;
 	}
-	printf("\n\n\n...按任意键返回！！");
+	printf("\n\n\n...按ENTER键返回！！");
 	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	getchar();
 	return ;
@@ -316,6 +316,7 @@ void del(stu* head)			//删除单条数据函数
 	else
 	{
 		printf("删除取消!\n\n\n...任意键返回！！");
+        getchar();
 		return ;
 	}
 
@@ -420,13 +421,13 @@ void change(stu *head)
 		    p->average=(float)((p->sum)/6.0);
         }
 		save(head);
-	    printf("修改成功!\n\n\n...任意键返回！！");
+	    printf("修改成功!\n\n\n...ENTER键返回！！");
         getchar();
 		return ;
 	}
 	else
 	{
-		printf("修改取消!\n\n\n...任意键返回！！");
+        printf("修改取消!\n\n\n...ENTER键返回！！");
         getchar();
 		return ;
 	}
@@ -438,9 +439,9 @@ void tongji(stu *head)
 	int a,c;			//a中存储要统计的分界点数据
 	int s;			//s为要统计的科目选择
 	stu *p;
-	printf("要统计的项目是:\n");
-	printf("1.语文  2.数学  3.英语  4.物理  5.化学  6.生物  7.总分  8.平均分\n");
-	printf("请选择数字(1—8):");
+	printf("要统计的项目是:\n\n");
+	printf("\t1.语文 \t 2.数学 \t 3.英语\n\t4.物理 \t 5.化学 \t 6.生物\n\t7.总分 \t 8.平均分\n\n");
+	printf("\t请选择数字(1—8):");
 	scanf("%d",&s);
 	printf("请输入要统计的数据范围  如：+80(80分以上)或-80(80分以下)  :");
 	do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
@@ -736,7 +737,7 @@ void tongji(stu *head)
 		}
 		break;
 	}
-	printf("\n\n\n...按任意键返回!");
+	printf("\n\n\n...按ENTER键返回!");
     do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 	mygetch();
 }
@@ -1174,7 +1175,7 @@ int login()				//登陆
 			if(!strcmp(p.u,u))
 			{
                 do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
-				printf("\n\t\t\t请输入密码(1~10)：");
+				printf("\n\t\t\t请输入密码(1~9)：");
 				n++;
 				/*do{c = fgetc(stdin);}while(c!=10&&c!=EOF);
 				for(i=0;i<10;i++)			//此循环用来显示密文密码
