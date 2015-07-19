@@ -327,6 +327,12 @@ void change(stu *head)
 	char m;
 	stu* p;
 	p=find(head);
+    if(p == NULL)
+    {
+        //printf("\n修改信息取消，按ENTER键返回主菜单....\n");
+        getchar();
+        return ; 
+    }
     p=p->next;
 	printf("\n你要修改的学生信息为：\n");
 	print_head();
@@ -1279,7 +1285,7 @@ void enroll()				//注册
 			mygetch();
 			exit(0);
 		}
-		printf("\n\t\t\t注册完成，请重新登陆...");
+        printf("\n\t\t\t注册完成，请重新登陆...");
 		fclose(fp);
 		mygetch();
 		enter();
