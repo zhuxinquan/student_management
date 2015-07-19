@@ -217,8 +217,8 @@ void save(stu* head)
 	}
 	for(p=head->next;p!=NULL;p=p->next)
 		fprintf(fp,"%s %s %d %d %d %d %d %d %d %f \n",p->id,p->name,p->chinese,p->math,p->english,p->physics,p->chemistry,p->biology,p->sum,p->average);
-	printf("文件保存成功！\n\n\n...按任意键返回！");
-	mygetch();
+	//printf("文件保存成功！\n\n\n...按任意键返回！");
+	//mygetch();
 	fclose(fp);
 }
 
@@ -286,7 +286,15 @@ void print_head()		//显示表头
 
 void print_data(stu *p)		//输出数据函数
 {
-	printf("%-10s|%-10s   | %-4d| %-4d| %-4d| %-4d| %-4d| %-4d| %-4d |%-.2f\n",p->id,p->name,p->chinese,p->math,p->english,p->physics,p->chemistry,p->biology,p->sum,p->average);
+	//printf("%-10s|%-10s   | %-4d| %-4d| %-4d| %-4d| %-4d| %-4d| %-4d |%-.2f\n",p->id,p->name,p->chinese,p->math,p->english,p->physics,p->chemistry,p->biology,p->sum,p->average);
+    if(((p->name[1]) >= 'A' && (p->name[1]) <= 'Z') || ((p->name[1]) >= 'a' && (p->name[1]) <= 'z') || ((p->name[1]) >= '0' && (p->name[1]) <= '9'))
+    {
+	    printf("%-10s|%-10s   | %-4d| %-4d| %-4d| %-4d| %-4d| %-4d| %-4d |%-.2f\n",p->id,p->name,p->chinese,p->math,p->english,p->physics,p->chemistry,p->biology,p->sum,p->average);
+    }
+    else
+    {
+	    printf("%-10s|%-16s| %-4d| %-4d| %-4d| %-4d| %-4d| %-4d| %-4d |%-.2f\n",p->id,p->name,p->chinese,p->math,p->english,p->physics,p->chemistry,p->biology,p->sum,p->average);
+    }
 }
 
 void del(stu* head)			//删除单条数据函数
